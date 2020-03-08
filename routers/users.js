@@ -8,6 +8,8 @@ router.get("/:smsg", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
+  const data = req.body.data;
+  console.log(data);
   res.status(201).json({
     message: "data created"
   });
