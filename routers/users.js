@@ -40,15 +40,39 @@ router.post("/", (req, res, next) => {
 });
 
 router.patch("/:smsg", (req, res, next) => {
-  res.status(200).json({
-    message: "data updated"
-  });
+  swifts
+    .update({ _id: req.params.smsg }, req.body, (err, swift) => {
+      if (err) {
+        console.log("The error is:", err);
+      }
+    })
+    .exec()
+    .then(doc => {
+      res.status(200).json({
+        messge: "Data Updated"
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 
 router.delete("/:smsg", (req, res, next) => {
-  res.status(200).json({
-    message: "data deleted"
-  });
+  swifts
+    .remove({ _id: req.params.smsg })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: "Data removed"
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 
 module.exports = router;
